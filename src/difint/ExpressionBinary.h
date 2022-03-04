@@ -25,27 +25,32 @@ class _B;
 
 GENERATE_EXPRESSION_BINARY_HAT(Exp)
 public:	
-	inline std::string strExpr() const { return "(" + m_L.strExpr() + ")^" + m_R.strExpr(); }
+	inline std::string strExpr() const { return this->fmtparenth(m_L) +"^"+ this->fmtparenth(m_R); }
+	inline constexpr int precedence() const{ return 1; }
 GENERATE_EXPRESSION_BINARY_SHOE(Exp)
 
 GENERATE_EXPRESSION_BINARY_HAT(Sum)
 public:
-	inline std::string strExpr() const { return m_L.strExpr() + "+" + m_R.strExpr(); }
+	inline std::string strExpr() const { return this->fmtparenth(m_L) + "+" + this->fmtparenth(m_R); }
+	inline constexpr int precedence() const{ return 3; }
 GENERATE_EXPRESSION_BINARY_SHOE(Sum)
 
 GENERATE_EXPRESSION_BINARY_HAT(Dif)
 public:
-	inline std::string strExpr() const { return m_L.strExpr() + "-(" + m_R.strExpr()+")"; }
+	inline std::string strExpr() const { return this->fmtparenth(m_L) + "-" + this->fmtparenth(m_R); }
+	inline constexpr int precedence() const{ return 3; }
 GENERATE_EXPRESSION_BINARY_SHOE(Dif)
 
 GENERATE_EXPRESSION_BINARY_HAT(Mul)
 public:
-	inline std::string strExpr() const { return "(" + m_L.strExpr() + ")*(" + m_R.strExpr() + ")"; }
+	inline std::string strExpr() const { return this->fmtparenth(m_L) + "*" + this->fmtparenth(m_R); }
+	inline constexpr int precedence() const{ return 2; }
 GENERATE_EXPRESSION_BINARY_SHOE(Mul)
 
 GENERATE_EXPRESSION_BINARY_HAT(Div)
 public:
-	inline std::string strExpr() const { return "(" + m_L.strExpr() + ")/(" + m_R.strExpr() + ")"; }
+	inline std::string strExpr() const { return this->fmtparenth(m_L) + "/" + this->fmtparenth(m_R); }
+	inline constexpr int precedence() const{ return 2; }
 GENERATE_EXPRESSION_BINARY_SHOE(Div)
 
 }

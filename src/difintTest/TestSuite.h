@@ -9,6 +9,6 @@ namespace basicexpression
 	{
 		REGISTERTESTCASE(basicBinaryExpression)
 		REGISTERTESTCASE(ComplexBinaryExpression)
+		REGISTERTESTCASE(ComplexExpressionsWithParenthesis)
 	}
-
 }

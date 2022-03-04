@@ -155,6 +155,7 @@
     <ClInclude Include="difint.h" />
     <ClInclude Include="ExpressionBinary.h" />
     <ClInclude Include="ExpressionBase.h" />
+    <ClInclude Include="ExpressionUnary.h" />
     <ClInclude Include="Variable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
