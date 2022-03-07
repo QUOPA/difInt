@@ -16,7 +16,6 @@ class _B
 {
 public:
 	inline std::string strExpr() const { return derived()->strExpr(); }
-	
 
 	template <typename OtherDerived>
 	inline const auto e(const _B<OtherDerived>& rhs) const { return createExp(this->ref(), rhs.ref()); }
@@ -46,7 +45,6 @@ private:
 
 	inline const auto _ref() const { return *derived(); }
 	inline auto _ref() { return *derived(); }
-
 
 	const Derived* derived() const { return static_cast<const Derived*> (this); }
 	Derived* derived() { return static_cast<Derived*> (this); }

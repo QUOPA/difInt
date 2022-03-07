@@ -2,6 +2,8 @@
 
 #include "TestCasesBasicExpression.h"
 #include "TestCasesCharLiteral.h"
+#include "TestCasesDerivative.h"
+
 #include "testcommon/testmacros.h"
 
 namespace basicexpression 
@@ -11,10 +13,9 @@ namespace basicexpression
 		REGISTERTESTCASE(basicBinaryExpression)
 		REGISTERTESTCASE(ComplexBinaryExpression)
 		REGISTERTESTCASE(ComplexExpressionsWithParenthesis)
+		REGISTERTESTCASE(ComplexExpressionsWithConstants)
 	}
 }
-
-
 
 namespace charliteral
 {
@@ -23,4 +24,13 @@ namespace charliteral
 		REGISTERTESTCASE(charliteraltest)
 	}
 
+}
+
+namespace derivativetest
+{
+	void TestSuite()
+	{
+		REGISTERTESTCASE(basicOneVarDerivative)
+		REGISTERTESTCASE(basicSumDerivative)
+	}
 }

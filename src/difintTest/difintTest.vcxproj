@@ -158,6 +158,7 @@
     <ClCompile Include="TestMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="TestCasesDerivative.h" />
     <ClInclude Include="TestCasesBasicExpression.h" />
     <ClInclude Include="TestCasesCharLiteral.h" />
     <ClInclude Include="TestSuite.h" />

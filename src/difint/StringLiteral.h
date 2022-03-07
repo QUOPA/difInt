@@ -10,15 +10,18 @@
 //		: (c >= 65 && c <= 90 ? ((c - 38) << (order * 6))\
 //			: (c == 95 ? (63 << (order * 6)) : 0))));
 //
-//#define E(L,I) ((I < sizeof(L)) ? (EncodeKey(L[I],I)) : 0)
+//#define LKEY_DIGIT_ENCODER(L,I) ((I < sizeof(L)) ? (EncodeKey(L[I],I)) : 0)
 
-#define E(L,I) ((I < sizeof(L)) ? (EncodeKey(L[I],I)) : 0UL)
+#define LKEY_DIGIT_ENCODER(L,I) ((I < sizeof(L)) ? (EncodeKey(L[I],I)) : 0UL)
 
-#define STR(L) \
-E(L,0)+E(L,1)+E(L,2)+E(L,3)+E(L,4)+E(L,5)+\
-E(L,6)+E(L,7)+E(L,8)+E(L,9)
+#define LKEY_STR_ENCODER(L)\
+LKEY_DIGIT_ENCODER(L,0)+LKEY_DIGIT_ENCODER(L,1)+\
+LKEY_DIGIT_ENCODER(L,2)+LKEY_DIGIT_ENCODER(L,3)+\
+LKEY_DIGIT_ENCODER(L,4)+LKEY_DIGIT_ENCODER(L,5)+\
+LKEY_DIGIT_ENCODER(L,6)+LKEY_DIGIT_ENCODER(L,7)+\
+LKEY_DIGIT_ENCODER(L,8)+LKEY_DIGIT_ENCODER(L,9)
 
-#define DEF_STR_LITERAL(VARNAME) constexprchecker<STR(#VARNAME)> VARNAME;
+#define DEF_STRDEF_VAR(VARNAME) LiteralKey<LKEY_STR_ENCODER(#VARNAME)> VARNAME;
 
 constexpr unsigned long long EncodeKey(char c, int order)
 {
@@ -50,33 +53,9 @@ std::string DecodeKey()
 
 }
 
-
 template<unsigned long long a>
-struct constexprchecker
+struct LiteralKey
 {
-	std::string getString() { return DecodeKey<a>(); }
+	std::string getString() const { return DecodeKey<a>(); }
 };
-
-
-template<char...>
-class StringLiteral;
-
-template<>
-struct StringLiteral<>
-{
-	StringLiteral() {}
-
-	static std::string getLiteral() { return std::string(); }
-};
-
-template <char firstchar, char... charelem>
-class StringLiteral<firstchar, charelem...>
-{
-public:
-	StringLiteral() {}
-
-	static std::string getLiteral() { return firstchar + StringLiteral<charelem...>::getLiteral(); }
-};
-
-
 

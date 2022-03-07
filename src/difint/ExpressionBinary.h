@@ -2,6 +2,7 @@
 
 
 #include "difint/ExpressionBase.h"
+#include "difint/Variable.h"
 #include <string>
 
 #define GENERATE_EXPRESSION_BINARY_HAT(OpName)\
@@ -20,6 +21,9 @@ inline decltype(auto) create##OpName(_L&& L, _R&& R) {\
 
 namespace di
 {
+template <unsigned long long keystr>
+class V;
+
 template<typename OtherDerived>
 class _B;
 
@@ -33,6 +37,9 @@ GENERATE_EXPRESSION_BINARY_HAT(Sum)
 public:
 	inline std::string strExpr() const { return this->fmtparenth(m_L) + "+" + this->fmtparenth(m_R); }
 	inline constexpr int precedence() const{ return 3; }
+
+	template <typename T, unsigned long long keylhs>
+	auto derivative(const V<keylhs>& con) const { return m_L.derivative<T>(con) + m_R.derivative<T>(con); }
 GENERATE_EXPRESSION_BINARY_SHOE(Sum)
 
 GENERATE_EXPRESSION_BINARY_HAT(Dif)
