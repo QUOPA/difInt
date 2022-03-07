@@ -1,6 +1,7 @@
 #pragma once
 
 #include "TestCasesBasicExpression.h"
+#include "TestCasesCharLiteral.h"
 #include "testcommon/testmacros.h"
 
 namespace basicexpression 
@@ -11,4 +12,15 @@ namespace basicexpression
 		REGISTERTESTCASE(ComplexBinaryExpression)
 		REGISTERTESTCASE(ComplexExpressionsWithParenthesis)
 	}
+}
+
+
+
+namespace charliteral
+{
+	void TestSuite()
+	{
+		REGISTERTESTCASE(charliteraltest)
+	}
+
 }
