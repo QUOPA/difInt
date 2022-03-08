@@ -40,4 +40,20 @@ namespace derivativetest
 
 	}
 
+	void basicExpDerivative()
+	{
+		DIFINT_VAR(C1);
+		DIFINT_VAR(C2);
+
+		DIFINT_VAR_4(x, x2, x3, x4);
+		di::C<double> Num(3.5);
+
+		auto LogExpr = x2.e(Num);
+		auto ResExpr = LogExpr.derivative<double>(x2);
+		
+		std::cout << ResExpr.strExpr() << std::endl;
+
+	}
+
+
 }

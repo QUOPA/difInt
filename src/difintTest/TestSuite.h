@@ -22,6 +22,7 @@ namespace charliteral
 	void TestSuite()
 	{
 		REGISTERTESTCASE(charliteraltest)
+		
 	}
 
 }
@@ -32,5 +33,6 @@ namespace derivativetest
 	{
 		REGISTERTESTCASE(basicOneVarDerivative)
 		REGISTERTESTCASE(basicSumDerivative)
+		REGISTERTESTCASE(basicExpDerivative)
 	}
 }

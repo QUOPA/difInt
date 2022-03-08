@@ -10,6 +10,12 @@ template <unsigned long long strKey>
 class V;
 
 template <typename T>
+class C0;
+
+template <typename T>
+class C1;
+
+template <typename T>
 std::string to_string_wrapper(const T& inData) { return std::to_string(inData); }
 
 // write here for specialization
@@ -24,19 +30,38 @@ public:
 	inline constexpr int precedence() const { return 0; }
 
 	template <unsigned long long keyother>
-	auto derivative(const V<keyother>& con) const { return C(0); }
+	auto derivative(const V<keyother>& con) const { return C0<T>(); }
 
 	template <typename T2,  unsigned long long keyother>
-	auto derivative(const V<keyother>& con) const { return C<T2>(0); }
+	auto derivative(const V<keyother>& con) const { return C0<T2>(); }
+
+	T& val() { return m_data; }
+	const T& val() const { return m_data; }
 
 private:
 	T m_data;
 
-	inline const auto& _ref() const { return *this; }
-	inline auto& _ref() { return *this; }
+	//inline const auto& _ref() const { return *this; }
+	//inline auto& _ref() { return *this; }
 
 	template <typename OtherDerived>
 	friend class _B;
 };
+
+// special case: 0
+template<typename T>
+struct C0 : public C<T> { C0() : C<T>(0) {} };
+
+// special case: 0
+template<typename T>
+struct C1 : public C<T> { C1() : C<T>(1) {} };
+
+//// special case: 0
+//template<typename T>
+//struct Cp : public C<T> { Cp(const T inData) : C<T>(inData) {} };
+//
+//// special case: negative
+//template<typename T>
+//struct Cn : public C<T> { Cn(const T inData) : C<T>(inData) {} };
 
 }
