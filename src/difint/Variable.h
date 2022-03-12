@@ -3,6 +3,7 @@
 #include "difint/StringLiteral.h"
 #include "difint/ExpressionBase.h"
 #include "difint/Constant.h"
+#include "difint/BooleanTemplate.h"
 #include <string>
 
 namespace di
@@ -27,6 +28,32 @@ public:
 	// derivative by this variable
 	template<typename T>
 	auto derivative(const V<strkey>& var) const { return C<T>(1); }
+
+	template<unsigned long long strOtherKey>
+	constexpr bool findvar() const { return false; }
+	//static constexpr bool findvar(const V<strOtherKey>& var) { return false; }
+
+	template<>
+	constexpr bool findvar<strkey>() const { return true; }
+	//static constexpr bool findvar<strkey> (const V& var) { return true; }
+
+	//template<>
+	//static constexpr bool findvar<strkey>() { return true; }
+// 
+// 	template <unsigned long long otherKey>
+// 	struct IsSameKey 
+// 	{
+// 		typedef _FALSE Type;
+// 	};
+// 
+// 	template <>
+// 	struct IsSameKey<strkey>
+// 	{
+// 		typedef _TRUE Type;
+// 	};
+
+
+
 
 private:
 	LiteralKey<strkey> m_strkey;

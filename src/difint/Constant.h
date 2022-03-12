@@ -38,6 +38,17 @@ public:
 	T& val() { return m_data; }
 	const T& val() const { return m_data; }
 
+	template<unsigned long long strOtherKey>
+	constexpr bool findvar() const;
+	
+	//static constexpr bool findvar(const V<strOtherKey>& con) { return false; }
+
+// 	template <unsigned long long otherKey>
+// 	struct IsSameKey
+// 	{
+// 		typedef _FALSE Type;
+// 	};
+
 private:
 	T m_data;
 
@@ -63,5 +74,12 @@ struct C1 : public C<T> { C1() : C<T>(1) {} };
 //// special case: negative
 //template<typename T>
 //struct Cn : public C<T> { Cn(const T inData) : C<T>(inData) {} };
+
+template<typename T>
+template<unsigned long long strOtherKey>
+constexpr bool C<T>::findvar() const
+{
+	return false;
+}
 
 }

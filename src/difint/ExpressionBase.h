@@ -41,9 +41,12 @@ public:
 	inline std::string fmtparenth(const _B<OtherDerived>& inexpr) const
 	{ return precedence() < inexpr.precedence() ? ("(" + inexpr.strExpr() + ")") : inexpr.strExpr(); }
 
+	//template<unsigned long long strOtherKey>
+	//static constexpr bool findvar() { return Derived::findvar<strOtherKey>(); }
+
 private:
 
-	inline const auto _ref() const { return *derived(); }
+	inline auto _ref() const { return *derived(); }
 	inline auto _ref() { return *derived(); }
 
 	const Derived* derived() const { return static_cast<const Derived*> (this); }

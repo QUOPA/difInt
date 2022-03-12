@@ -161,6 +161,7 @@
     <ClInclude Include="TestCasesDerivative.h" />
     <ClInclude Include="TestCasesBasicExpression.h" />
     <ClInclude Include="TestCasesCharLiteral.h" />
+    <ClInclude Include="TestCasesFunctions.h" />
     <ClInclude Include="TestSuite.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

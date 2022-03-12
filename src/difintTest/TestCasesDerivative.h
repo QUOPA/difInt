@@ -33,7 +33,10 @@ namespace derivativetest
 		DIFINT_VAR_4(x, x2, x3, x4);
 		di::C<double> Num(3.5);
 
-		auto sumexpr = x + x2 +Num + x3;
+		auto sumexpr = x + x2;// +Num + x3;
+
+		decltype(sumexpr)::testSTatic<double>(x2);
+
 		std::cout << sumexpr.strExpr() << std::endl;
 		auto Dsumexpr = sumexpr.derivative<double>(x2);
 		std::cout << Dsumexpr.strExpr() << std::endl;

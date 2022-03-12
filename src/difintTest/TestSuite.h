@@ -3,6 +3,7 @@
 #include "TestCasesBasicExpression.h"
 #include "TestCasesCharLiteral.h"
 #include "TestCasesDerivative.h"
+#include "TestCasesFunctions.h"
 
 #include "testcommon/testmacros.h"
 
@@ -35,4 +36,13 @@ namespace derivativetest
 		REGISTERTESTCASE(basicSumDerivative)
 		REGISTERTESTCASE(basicExpDerivative)
 	}
+}
+
+namespace functiontests
+{
+	void TestSuite()
+	{
+		REGISTERTESTCASE(basicFunctionExpression)
+	}
+
 }

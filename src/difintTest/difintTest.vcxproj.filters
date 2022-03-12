@@ -32,5 +32,8 @@
     <ClInclude Include="TestCasesDerivative.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="TestCasesFunctions.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
