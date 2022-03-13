@@ -8,6 +8,7 @@ int main()
 	REGISTERTESTSUITE(charliteral)
 	REGISTERTESTSUITE(derivativetest)
 	REGISTERTESTSUITE(functiontests)
+	REGISTERTESTSUITE(derivativecomplicated)
 
 
 	char Buff[256];

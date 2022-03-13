@@ -60,13 +60,13 @@ inline decltype(auto) createExpDerivative(_TRUE lIn, _TRUE rIn, _L L, _R R, cons
 }
 
 template <typename T, typename _L, typename _R, unsigned long long keylhs>
-inline decltype(auto) createExpDerivative(_TRUE lIn, _FALSE rIn, _L L, _R R, const V<keylhs>& con) {
-	return R * L.e(R - C1<T>());
+inline decltype(auto) createExpDerivative(_TRUE lIn, _FALSE rIn, _L L, _R R, const V<keylhs>& var) {
+	return R * L.e(R - C1<T>()) * L.derivative<T>(var);
 }
 
 template <typename T, typename _L, typename _R, unsigned long long keylhs>
-inline decltype(auto) createExpDerivative(_FALSE lIn, _TRUE rIn, _L L, _R R, const V<keylhs>& con) {
-	return L.e(R) * fnLn(L);
+inline decltype(auto) createExpDerivative(_FALSE lIn, _TRUE rIn, _L L, _R R, const V<keylhs>& var) {
+	return L.e(R) * R.derivative<T>(var) * fnLn(L);
 }
 
 template <typename T, typename _L, typename _R, unsigned long long keylhs>

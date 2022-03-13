@@ -4,6 +4,7 @@
 #include "TestCasesCharLiteral.h"
 #include "TestCasesDerivative.h"
 #include "TestCasesFunctions.h"
+#include "TestCasesDerivativeComplicated.h"
 
 #include "testcommon/testmacros.h"
 
@@ -47,6 +48,17 @@ namespace functiontests
 	void TestSuite()
 	{
 		REGISTERTESTCASE(basicFunctionExpression)
+	}
+
+}
+
+
+namespace derivativecomplicated
+{
+	void TestSuite()
+	{
+		REGISTERTESTCASE(complicatedExpr1)
+		REGISTERTESTCASE(complicatedExpr2)
 	}
 
 }
