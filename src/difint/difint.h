@@ -2,6 +2,7 @@
 #include "difint/Constant.h"
 #include "difint/Variable.h"
 #include "difint/Functions.h"
+#include "difint/Unexpected.h"
 
 // okay... i tried using variadic but failed - VS builder 17.1
 // And by some reason, the cascading way does not work, the last resort is below...

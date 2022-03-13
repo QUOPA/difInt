@@ -37,10 +37,9 @@ namespace di {
 	};
 
 	template<typename LBOOL, typename RBOOL>
-	auto BoolORFunc()
+	auto BoolORFunc(LBOOL inL, RBOOL inR)
 	{
-		typedef std::conditional<LBOOL::tfVal || RBOOL::tfVal, _TRUE, _FALSE> Type;
-		return Type();
+		return typename std::conditional<LBOOL::tfVal || RBOOL::tfVal, _TRUE, _FALSE>::type();
 	};
 
 

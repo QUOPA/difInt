@@ -31,16 +31,12 @@ namespace derivativetest
 		DIFINT_VAR(C2);
 
 		DIFINT_VAR_4(x, x2, x3, x4);
-		di::C<double> Num(3.5);
+		di::C<double> Num(3);
 
-		auto sumexpr = x + x2;// +Num + x3;
-
-		decltype(sumexpr)::testSTatic<double>(x2);
-
+		auto sumexpr = x + x2 + x3+ x4;// +Num + x3;
 		std::cout << sumexpr.strExpr() << std::endl;
-		auto Dsumexpr = sumexpr.derivative<double>(x2);
+		auto Dsumexpr = sumexpr.derivative<double>(x3);
 		std::cout << Dsumexpr.strExpr() << std::endl;
-
 	}
 
 	void basicExpDerivative()
@@ -51,12 +47,151 @@ namespace derivativetest
 		DIFINT_VAR_4(x, x2, x3, x4);
 		di::C<double> Num(3.5);
 
-		auto LogExpr = x2.e(Num);
-		auto ResExpr = LogExpr.derivative<double>(x2);
-		
-		std::cout << ResExpr.strExpr() << std::endl;
+		auto Expr = x2.e(Num);
+		std::cout << Expr.strExpr() << std::endl;
+		auto ResExpr = Expr.derivative<double>(x2);
+		std::cout << ResExpr.strExpr() << std::endl << std::endl;
+
+		auto Expr2 = Num.e(x2);
+		std::cout << Expr2.strExpr() << std::endl;
+		auto ResExpr2 = Expr2.derivative<double>(x2);
+		std::cout << ResExpr2.strExpr() << std::endl << std::endl;
+
+		auto Expr3 = x2.e(x2);
+		std::cout << Expr3.strExpr() << std::endl;
+		auto ResExpr3 = Expr3.derivative<double>(x2);
+		std::cout << ResExpr3.strExpr() << std::endl << std::endl;
+
 
 	}
+
+	void basicLogDerivative()
+	{
+		DIFINT_VAR(C1);
+		DIFINT_VAR(C2);
+
+		DIFINT_VAR_4(x, x2, x3, x4);
+		di::C<double> Num(3.5);
+
+		auto Expr = fnLog(x2, Num);
+		std::cout << Expr.strExpr() << std::endl;
+		auto DerExpr = Expr.derivative<double>(x2);
+		std::cout << DerExpr.strExpr() << std::endl << std::endl;
+
+		auto Expr2 = fnLog(Num, x2);
+		std::cout << Expr2.strExpr() << std::endl;
+		auto DerExpr2 = Expr2.derivative<double>(x2);
+		std::cout << DerExpr2.strExpr() << std::endl << std::endl;
+
+		auto Expr3 = fnLog(x2, x2);
+		std::cout << Expr3.strExpr() << std::endl;
+		auto DerExpr3 = Expr3.derivative<double>(x2);
+		std::cout << DerExpr3.strExpr() << std::endl << std::endl;
+	}
+
+	void basicSubDerivative()
+	{
+		DIFINT_VAR(C1);
+		DIFINT_VAR(C2);
+
+		DIFINT_VAR_4(x, x2, x3, x4);
+		di::C<double> Num(3.5);
+
+		auto Expr = x2 - Num;
+		std::cout << Expr.strExpr() << std::endl;
+		auto DerExpr = Expr.derivative<double>(x2);
+		std::cout << DerExpr.strExpr() << std::endl << std::endl;
+
+		auto Expr2 = Num - x2;
+		std::cout << Expr2.strExpr() << std::endl;
+		auto DerExpr2 = Expr2.derivative<double>(x2);
+		std::cout << DerExpr2.strExpr() << std::endl << std::endl;
+
+		auto Expr3 = x2 - x2;
+		std::cout << Expr3.strExpr() << std::endl;
+		auto DerExpr3 = Expr3.derivative<double>(x2);
+		std::cout << DerExpr3.strExpr() << std::endl << std::endl;
+	}
+
+	void basicMulDerivative()
+	{
+		DIFINT_VAR(C1);
+		DIFINT_VAR(C2);
+
+		DIFINT_VAR_4(x, x2, x3, x4);
+		di::C<double> Num(3.5);
+
+		auto Expr = x2 * Num;
+		std::cout << Expr.strExpr() << std::endl;
+		auto DerExpr = Expr.derivative<double>(x2);
+		std::cout << DerExpr.strExpr() << std::endl << std::endl;
+
+		auto Expr2 = Num * x2;
+		std::cout << Expr2.strExpr() << std::endl;
+		auto DerExpr2 = Expr2.derivative<double>(x2);
+		std::cout << DerExpr2.strExpr() << std::endl << std::endl;
+
+		auto Expr3 = x2 * x2;
+		std::cout << Expr3.strExpr() << std::endl;
+		auto DerExpr3 = Expr3.derivative<double>(x2);
+		std::cout << DerExpr3.strExpr() << std::endl << std::endl;
+	}
+
+
+	void basicDivDerivative()
+	{
+		DIFINT_VAR(C1);
+		DIFINT_VAR(C2);
+
+		DIFINT_VAR_4(x, x2, x3, x4);
+		di::C<double> Num(3.5);
+
+		auto Expr = x2/Num;
+		std::cout << Expr.strExpr() << std::endl;
+		auto DerExpr = Expr.derivative<double>(x2);
+		std::cout << DerExpr.strExpr() << std::endl << std::endl;
+
+		auto Expr2 = Num/x2;
+		std::cout << Expr2.strExpr() << std::endl;
+		auto DerExpr2 = Expr2.derivative<double>(x2);
+		std::cout << DerExpr2.strExpr() << std::endl << std::endl;
+
+		auto Expr3 = x2/x2;
+		std::cout << Expr3.strExpr() << std::endl;
+		auto DerExpr3 = Expr3.derivative<double>(x2);
+		std::cout << DerExpr3.strExpr() << std::endl << std::endl;
+	}
+
+	void basicUnaryDerivative()
+	{
+		DIFINT_VAR(C1);
+		DIFINT_VAR(C2);
+
+		DIFINT_VAR_4(x, x2, x3, x4);
+		di::C<double> Num(3.5);
+
+		auto Expr = -x2;
+		std::cout << Expr.strExpr() << std::endl;
+		auto DerExpr = Expr.derivative<double>(x2);
+		std::cout << DerExpr.strExpr() << std::endl << std::endl;
+
+		auto Expr2 = -Num;
+		std::cout << Expr2.strExpr() << std::endl;
+		auto DerExpr2 = Expr2.derivative<double>(x2);
+		std::cout << DerExpr2.strExpr() << std::endl << std::endl;
+
+		auto Expr3 = fnLn(x2);
+		std::cout << Expr3.strExpr() << std::endl;
+		auto DerExpr3 = Expr3.derivative<double>(x2);
+		std::cout << DerExpr3.strExpr() << std::endl <<std::endl;
+
+		auto Expr4 = fnLn(Num);
+		std::cout << Expr4.strExpr() << std::endl;
+		auto DerExpr4 = Expr4.derivative<double>(x2);
+		std::cout << DerExpr4.strExpr() << std::endl;
+
+	}
+
 
 
 }

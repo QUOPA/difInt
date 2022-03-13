@@ -2,14 +2,10 @@
 
 #include <string>
 #include <iostream>
-#include "difint/ExpressionBinary.h"
-
+#include "difint/Variable.h"
 
 namespace di
 {
-
-template <typename _L, typename _R>
-class Exp;
 
 template <typename Derived>
 class _B
@@ -31,6 +27,8 @@ public:
 
 	template <typename OtherDerived>
 	inline const auto operator/(const _B<OtherDerived>& rhs) const { return createDiv(this->ref(), rhs.ref()); }
+
+	inline const auto operator-() const { return createNeg(this->ref()); }
 
 	inline constexpr int precedence() const { return derived()->precedence(); }
 
@@ -56,5 +54,27 @@ private:
 	//friend std::ostream& operator<<(std::ostream& o, const _B<Derived2>& inexpr);
 };
 
+
+class Unexpected : public _B<Unexpected>
+{
+public:
+
+	inline std::string strExpr() const { return "<unexpected>"; }
+	inline constexpr int precedence() const { return 0; }
+
+	template <unsigned long long keyother>
+	auto derivative(const V<keyother>& con) const { return Unexpected(); }
+
+	template<unsigned long long strOtherKey>
+	constexpr auto findvar() const { return _FALSE(); }
+
+private:
+
+	//inline const auto& _ref() const { return *this; }
+	//inline auto& _ref() { return *this; }
+
+	template <typename OtherDerived>
+	friend class _B;
+};
 
 }

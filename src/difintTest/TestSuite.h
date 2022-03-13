@@ -35,6 +35,10 @@ namespace derivativetest
 		REGISTERTESTCASE(basicOneVarDerivative)
 		REGISTERTESTCASE(basicSumDerivative)
 		REGISTERTESTCASE(basicExpDerivative)
+		REGISTERTESTCASE(basicLogDerivative)
+		REGISTERTESTCASE(basicSubDerivative)
+		REGISTERTESTCASE(basicDivDerivative)
+		REGISTERTESTCASE(basicUnaryDerivative)
 	}
 }
 

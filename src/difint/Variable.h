@@ -30,12 +30,12 @@ public:
 	auto derivative(const V<strkey>& var) const { return C<T>(1); }
 
 	template<unsigned long long strOtherKey>
-	constexpr bool findvar() const { return false; }
-	//static constexpr bool findvar(const V<strOtherKey>& var) { return false; }
+	constexpr auto findvar() const { return _FALSE(); }
 
 	template<>
-	constexpr bool findvar<strkey>() const { return true; }
-	//static constexpr bool findvar<strkey> (const V& var) { return true; }
+	constexpr auto findvar<strkey>() const { return _TRUE(); }
+
+
 
 	//template<>
 	//static constexpr bool findvar<strkey>() { return true; }

@@ -1,6 +1,7 @@
 #pragma once
 
 
+#include "difint/Unexpected.h"
 #include "difint/ExpressionBase.h"
 #include "difint/Variable.h"
 #include "difint/Constant.h"
@@ -14,6 +15,8 @@ template <typename _L, typename _R>\
 class OpName : public _B <OpName<_L, _R>>{\
 public:\
 	explicit OpName(_L&& L, _R&& R) : m_L(L), m_R(R) {} \
+	template<unsigned long long keyIn>\
+	constexpr auto findvar() const { return BoolORFunc(m_L.findvar<keyIn>(), m_R.findvar<keyIn>()); }
 
 #define GENERATE_EXPRESSION_BINARY_SHOE(OpName)\
 private:\
@@ -33,125 +36,211 @@ class V;
 template <typename T>
 class C;
 
+template<typename T>
+struct C1;
+
+template<typename T>
+struct C0;
+
+class Unexpected;
+
 template<typename OtherDerived>
 class _B;
 
-//template <typename T, typename _L, typename _R, unsigned long long keylhs>
-//inline decltype(auto) createExpDerivative(_L L, _R R, const V<keylhs>& con);
 
-template <typename T, typename _L, unsigned long long keylhs>
-inline decltype(auto) createExpDerivative(const _B<_L> & L, const C<T>& R, const V<keylhs>& con) {
-	return R * L.e( C<T> ( R.val()-1 ) );
+// Exp 
+template <typename T, typename LBOOL, typename RBOOL, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createExpDerivative(LBOOL lIn, RBOOL rIn, _L L, _R R, const V<keylhs>& var) {
+	return Unexpected();
 }
 
-template <typename T, typename _R, unsigned long long keylhs>
-inline decltype(auto) createExpDerivative(const C<T>& L, const _B<_R>& R, const V<keylhs>& con) {
-	return *this * fnLn(L);
+template <typename T, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createExpDerivative(_TRUE lIn, _TRUE rIn, _L L, _R R, const V<keylhs>& var) {
+	return L.e(R) * (R.derivative<T>(var) * fnLn(L) + L.derivative<T>(var) * R / L);
 }
 
-template <typename T, typename _R, unsigned long long keylhs>
-inline decltype(auto) createExpDerivative(const C<T>& L, _R R, const V<keylhs>& con) {
-	return *this * fnLn(L);
+template <typename T, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createExpDerivative(_TRUE lIn, _FALSE rIn, _L L, _R R, const V<keylhs>& con) {
+	return R * L.e(R - C1<T>());
 }
 
-template <bool LBOOL, bool RBOOL, typename T, typename _L, typename _R, unsigned long long keylhs>
-inline decltype(auto) createSumDerivative(_L L, _R R, const V<keylhs>& con) {
+template <typename T, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createExpDerivative(_FALSE lIn, _TRUE rIn, _L L, _R R, const V<keylhs>& con) {
+	return L.e(R) * fnLn(L);
+}
+
+template <typename T, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createExpDerivative(_FALSE lIn, _FALSE rIn, _L L, _R R, const V<keylhs>& con) {
+	return C0<T>();
+}
+
+// Sum
+template <typename T, typename LBOOL, typename RBOOL, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createSumDerivative(LBOOL lIn, RBOOL rIn, _L L, _R R, const V<keylhs>& con) {
+	return Unexpected();
+}
+
+template <typename T, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createSumDerivative(_TRUE lIn, _TRUE rIn, _L L, _R R, const V<keylhs>& con) {
 	return L.derivative<T>(con) + R.derivative<T>(con);
 }
 
-// need to implement log first
-//template <typename T, typename _R, unsigned long long keylhs>
-//inline decltype(auto) createExpDerivative(const C<T>& L, _R R, const V<keylhs>& con) {
-//	return L.e(C<T>(R.val() - 1));
-//}
+template <typename T, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createSumDerivative(_TRUE lIn, _FALSE rIn, _L L, _R R, const V<keylhs>& con) {
+	return L.derivative<T>(con);
+}
+
+template <typename T, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createSumDerivative(_FALSE lIn, _TRUE rIn, _L L, _R R, const V<keylhs>& con) {
+	return R.derivative<T>(con);
+}
+
+template <typename T, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createSumDerivative(_FALSE lIn, _FALSE rIn, _L L, _R R, const V<keylhs>& con) {
+	return C0<T>();
+}
+
+// Dif
+template <typename T, typename LBOOL, typename RBOOL, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createDifDerivative(LBOOL lIn, RBOOL rIn, _L L, _R R, const V<keylhs>& con) {
+	return Unexpected();
+}
+
+template <typename T, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createDifDerivative(_TRUE lIn, _TRUE rIn, _L L, _R R, const V<keylhs>& con) {
+	return L.derivative<T>(con) - R.derivative<T>(con);
+}
+
+template <typename T, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createDifDerivative(_TRUE lIn, _FALSE rIn, _L L, _R R, const V<keylhs>& con) {
+	return L.derivative<T>(con);
+}
+
+template <typename T, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createDifDerivative(_FALSE lIn, _TRUE rIn, _L L, _R R, const V<keylhs>& con) {
+	return -R.derivative<T>(con);
+}
+
+template <typename T, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createDifDerivative(_FALSE lIn, _FALSE rIn, _L L, _R R, const V<keylhs>& con) {
+	return C0<T>();
+}
+
+// Mul
+template <typename T, typename LBOOL, typename RBOOL, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createMulDerivative(LBOOL lIn, RBOOL rIn, _L L, _R R, const V<keylhs>& con) {
+	return Unexpected();
+}
+
+template <typename T, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createMulDerivative(_TRUE lIn, _TRUE rIn, _L L, _R R, const V<keylhs>& con) {
+	return L.derivative<T>(con) * R + L * R.derivative<T>(con);
+}
+
+template <typename T, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createMulDerivative(_TRUE lIn, _FALSE rIn, _L L, _R R, const V<keylhs>& con) {
+	return L.derivative<T>(con) * R;
+}
+
+template <typename T, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createMulDerivative(_FALSE lIn, _TRUE rIn, _L L, _R R, const V<keylhs>& con) {
+	return L * R.derivative<T>(con);
+}
+
+template <typename T, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createMulDerivative(_FALSE lIn, _FALSE rIn, _L L, _R R, const V<keylhs>& con) {
+	return C0<T>();
+}
+
+// Div
+template <typename T, typename LBOOL, typename RBOOL, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createDivDerivative(LBOOL lIn, RBOOL rIn, _L L, _R R, const V<keylhs>& con) {
+	return Unexpected();
+}
+
+template <typename T, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createDivDerivative(_TRUE lIn, _TRUE rIn, _L L, _R R, const V<keylhs>& con) {
+	return L.derivative<T>(con)/R - L * R.derivative<T>(con)*R.e(C<T>(-2));
+}
+
+template <typename T, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createDivDerivative(_TRUE lIn, _FALSE rIn, _L L, _R R, const V<keylhs>& con) {
+	return L.derivative<T>(con)/R;
+}
+
+template <typename T, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createDivDerivative(_FALSE lIn, _TRUE rIn, _L L, _R R, const V<keylhs>& con) {
+	return -L * R.derivative<T>(con) * R.e(C<T>(-2));
+}
+
+template <typename T, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createDivDerivative(_FALSE lIn, _FALSE rIn, _L L, _R R, const V<keylhs>& con) {
+	return C0<T>();
+}
+
+
+// Log
+template <typename T, typename LBOOL, typename RBOOL, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createLogDerivative(LBOOL lIn, RBOOL rIn, _L L, _R R, const V<keylhs>& con) {
+	return Unexpected();
+}
+
+template <typename T, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createLogDerivative(_TRUE lIn, _TRUE rIn, _L L, _R R, const V<keylhs>& con) {
+	return R.derivative<T>(con) / (R * fnLn(L)) - L.derivative<T>(con) / (L * fnLn(L)) * fnLog(L, R);
+}
+
+template <typename T, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createLogDerivative(_TRUE lIn, _FALSE rIn, _L L, _R R, const V<keylhs>& con) {
+	return -L.derivative<T>(con) / (L * fnLn(L)) * fnLog(L, R);
+}
+
+template <typename T, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createLogDerivative(_FALSE lIn, _TRUE rIn, _L L, _R R, const V<keylhs>& con) {
+	return R.derivative<T>(con) / (R * fnLn(L));
+}
+
+template <typename T, typename _L, typename _R, unsigned long long keylhs>
+inline decltype(auto) createLogDerivative(_FALSE lIn, _FALSE rIn, _L L, _R R, const V<keylhs>& con) {
+	return C0<T>();
+}
 
 GENERATE_EXPRESSION_BINARY_HAT(Exp)
 public:	
 	inline std::string strExpr() const { return this->fmtparenth(m_L) +"^"+ this->fmtparenth(m_R); }
 	inline constexpr int precedence() const{ return 10; }
 
-	template <typename T, unsigned long long keylhs>
-	auto derivative(const V<keylhs>& con) const { return createExpDerivative<T>(m_L, m_R, con); }
+	template <typename T, unsigned long long keyIn>
+	auto derivative(const V<keyIn>& con) const {
+		return createExpDerivative<T>(m_L.findvar<keyIn>(), m_R.findvar<keyIn>(), m_L, m_R, con); 
+	}
+
 GENERATE_EXPRESSION_BINARY_SHOE(Exp)
 
-template <bool inVal>
-void funcTEstFunc()
-{
-	std::cout << "test test" << std::endl;
-}
-
-// 
-// template <typename BoolTF>
-// void funcTEstFunc()
-// {
-// 	std::cout << "test test" << std::endl;
-// }
-// 
-// template <>
-// void funcTEstFunc<_TRUE>()
-// {
-// 	std::cout << "TRUE" << std::endl;
-// }
-// 
-// template <>
-// void funcTEstFunc<_FALSE>()
-// {
-// 	std::cout << "FALSE" << std::endl;
-// }
 
 GENERATE_EXPRESSION_BINARY_HAT(Sum)
 public:
 	inline std::string strExpr() const { return this->fmtparenth(m_L) + "+" + this->fmtparenth(m_R); }
 	inline constexpr int precedence() const{ return 30; }
 
-	template <unsigned long long keyin>
-	static constexpr bool findvar(const V<keyin>& var) {
-		constexpr bool testest = _L::findvar(var) || _R::findvar(var);
-		return  testest;
+	template <typename T, unsigned long long keyIn>
+	auto derivative(const V<keyIn>& var) const {
+		return createSumDerivative<T>(m_L.findvar<keyIn>(), m_R.findvar<keyIn>(), m_L, m_R, var);
 	}
-
-	template <typename T, unsigned long long keylhs>
-	//auto derivative(const V<keylhs>& con) const { return createSumDerivative<typename _L::find<keylhs>()::Type, typename _R::find<keylhs>()::Type, T>(m_L, m_R, con); }
-	auto derivative(const V<keylhs>& var) const {
-		constexpr bool Booltest = m_L.findvar<keylhs>() || m_R.findvar<keylhs>();
-		//funcTEstFunc<Booltest>();
-		return m_L.derivative<T>(var) + m_R.derivative<T>(var);
-	}
-	
-	template <typename T, unsigned long long keylhs>
-	static auto testSTatic(const V<keylhs>& var) {
-		//bool Booltest = m_L.findvar<keylhs>() || m_R.findvar< keylhs>();
-		//funcTEstFunc<Booltest>();
-		return true;
-	}
-	
-	
-
-	//template <unsigned long long keyin>
-	//void testhere() const { funcTEstFunc<typename _L::IsSameKey<keyin>::Type> (); }
-
-// 	template <unsigned long long otherKey>
-// 	struct IsSameKey
-// 	{
-// 		typedef typename _L::IsSameKey<otherKey>::Type Type;
-// 		//typedef typename BoolOR< typename _L::IsSameKey<otherKey>::Type, typename _R::IsSameKey<otherKey>::Type >::Type Type;
-// 	};
-
 
 GENERATE_EXPRESSION_BINARY_SHOE(Sum)
 
-template <typename T, typename _L, typename _R, unsigned long long keylhs>
-inline decltype(auto) createDifDerivative(_L L, _R R, const V<keylhs>& con) {
-	return L.derivative<T>(con) - R.derivative<T>(con);
-}
 
 GENERATE_EXPRESSION_BINARY_HAT(Dif)
 public:
 	inline std::string strExpr() const { return this->fmtparenth(m_L) + "-" + this->fmtparenth(m_R); }
 	inline constexpr int precedence() const{ return 30; }
 
-	template <typename T, unsigned long long keylhs>
-	auto derivative(const V<keylhs>& con) const { return m_L.derivative<T>(con) - m_R.derivative<T>(con); }
+	template <typename T, unsigned long long keyIn>
+		auto derivative(const V<keyIn>& con) const {
+		return createDifDerivative<T>(m_L.findvar<keyIn>(), m_R.findvar<keyIn>(), m_L, m_R, con);
+	}
+
 GENERATE_EXPRESSION_BINARY_SHOE(Dif)
 
 GENERATE_EXPRESSION_BINARY_HAT(Mul)
@@ -159,14 +248,22 @@ public:
 	inline std::string strExpr() const { return this->fmtparenth(m_L) + "*" + this->fmtparenth(m_R); }
 	inline constexpr int precedence() const{ return 20; }
 
-	template <typename T, unsigned long long keylhs>
-	auto derivative(const V<keylhs>& con) const { return m_L.derivative<T>(con)*m_R + m_L*m_R.derivative<T>(con); }
+	template <typename T, unsigned long long keyIn>
+	auto derivative(const V<keyIn>& con) const {
+		return createMulDerivative<T>(m_L.findvar<keyIn>(), m_R.findvar<keyIn>(), m_L, m_R, con);
+	}
 GENERATE_EXPRESSION_BINARY_SHOE(Mul)
 
 GENERATE_EXPRESSION_BINARY_HAT(Div)
 public:
 	inline std::string strExpr() const { return this->fmtparenth(m_L) + "/" + this->fmtparenth(m_R); }
 	inline constexpr int precedence() const{ return 20; }
+	
+	template <typename T, unsigned long long keyIn>
+	auto derivative(const V<keyIn>& con) const {
+		return createDivDerivative<T>(m_L.findvar<keyIn>(), m_R.findvar<keyIn>(), m_L, m_R, con);
+	}
+
 GENERATE_EXPRESSION_BINARY_SHOE(Div)
 
 
@@ -174,6 +271,11 @@ GENERATE_EXPRESSION_BINARY_HAT(Log)
 public:
 	inline std::string strExpr() const { return "log_" + this->fmtparenth(m_L) + "_" + this->fmtparenth(m_R); }
 	inline constexpr int precedence() const { return 11; }
+
+	template <typename T, unsigned long long keyIn>
+	auto derivative(const V<keyIn>& con) const {
+		return createLogDerivative<T>(m_L.findvar<keyIn>(), m_R.findvar<keyIn>(), m_L, m_R, con);
+	}
 
 GENERATE_EXPRESSION_BINARY_SHOE(Log)
 
