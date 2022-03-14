@@ -14,7 +14,7 @@ Download all header files in [(REPOSITORY)/src/difint](https://github.com/QUOPA/
 # Variables and Constants
 * Variables
 
-A varible is a placeholder to get input value, and devined as follows.
+A varible is a placeholder to get input value, and defined as follows.
 ```c++
 DIFINT_VAR(C2);
 DIFINT_VAR_4(x, x2, x3, x4);
