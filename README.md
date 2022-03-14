@@ -13,6 +13,7 @@ Download all header files in [(REPOSITORY)/src/difint](https://github.com/QUOPA/
 
 # Variables and Constants
 * Variables
+
 A varible is a placeholder to get input value, and devined as follows.
 ```c++
 DIFINT_VAR(C2);
@@ -25,6 +26,7 @@ C2, x, x2, x3, x4
 ```
 Since variables should be distinguished eachother, each variable has its own constexpr key value in it. The key value is derived by encoding its name (above example :'C2, x, x2, x3, x4'), and when we need the string name, the key value is decoded to string. By this reason, the length of variable name is limited by at most 10 characters.
 * Constants
+
 A constant object needs type and value.
 ```c++
 di::C<double> Num(3.5);
