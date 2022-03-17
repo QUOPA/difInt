@@ -62,4 +62,18 @@ namespace derivativecomplicated
 		std::cout << derivedExprx3.strExpr() << std::endl;
 	}
 
+	void complicatedExpr3()
+	{
+		
+		DIFINT_VAR_4(x, x2, x3, x4);
+
+		di::C0<double> asdf;
+
+		auto expr = 2 * x.e(3) ;
+
+		std::cout << expr.derivative<double>(x) << std::endl;
+		std::cout << x.derivative<double>(x) << std::endl;
+
+	}
+
 }

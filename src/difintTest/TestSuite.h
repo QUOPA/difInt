@@ -60,6 +60,7 @@ namespace derivativecomplicated
 	{
 		REGISTERTESTCASE(complicatedExpr1)
 		REGISTERTESTCASE(complicatedExpr2)
+		REGISTERTESTCASE(complicatedExpr3)
 	}
 
 }

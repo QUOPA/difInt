@@ -16,7 +16,6 @@ public:
 	template <typename OtherDerived>
 	inline const auto e(const _B<OtherDerived>& rhs) const { return createExp(this->ref(), rhs.ref()); }
 
-	template <typename OtherDerived>
 	inline const auto e(double rhs) const { return createExp(this->ref(), C<double>(rhs) ); }
 
 	template <typename OtherDerived>
