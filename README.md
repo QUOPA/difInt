@@ -83,27 +83,4 @@ C4^x^x2^x3^x4^x^x2^x3^x4^x^x*x^x2^x3^x4^x^x2^x3^x4^x^x*(x2^x3^x4^x^x2^x3^x4^x^x*
 
 
 # Further Works...
-## Generating expression by Variable - Number operations
-```c++
-auto expn = (x + 2).e(x2)
-```
-## Expression Reduction
-If there is redundant terms, it should be reduced to show cleaner expression. For example
-```
-x1-x1+x2 -->  x2
-2.0000 - 1.0000 --> 1.0000
-1.0000 * x1 --> x1
-... 
-```
-## Evaluation by value
-Need to define interface and implement it.
-## Integration algorithm
-Study and implement it
-## Number formatting
-Double numbers are too long to see.
-```
-2.53000 --> 2.53 
-... 
-```
-## Change implementation of constant' value to be constexpr.
-So that we can exploit the trait depending on the number
+Moved to Issues.
