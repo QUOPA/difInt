@@ -31,7 +31,6 @@ public:
 	inline const auto operator/(const _B<OtherDerived>& rhs) const { return createDiv(this->ref(), rhs.ref()); }
 
 
-
 	inline const auto operator-() const { return createNeg(this->ref()); }
 
 	inline constexpr int precedence() const { return derived()->precedence(); }
@@ -66,8 +65,8 @@ public:
 	inline std::string strExpr() const { return "<unexpected>"; }
 	inline constexpr int precedence() const { return 0; }
 
-	template <unsigned long long keyother>
-	auto derivative(const V<keyother>& con) const { return Unexpected(); }
+	template <typename T, unsigned long long keyother>
+	auto derivative(const V<T, keyother>& con) const { return Unexpected(); }
 
 	template<unsigned long long strOtherKey>
 	constexpr auto findvar() const { return _FALSE(); }

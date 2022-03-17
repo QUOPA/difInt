@@ -23,7 +23,7 @@ namespace derivativecomplicated
 
 		auto exprTest = C4.e(expn);
 		std::cout << exprTest.strExpr() << std::endl;
-		auto derivedExpr = exprTest.derivative<double>(x);
+		auto derivedExpr = exprTest.derivative(x);
 		std::cout << derivedExpr.strExpr() << std::endl;
 
 	}
@@ -47,15 +47,15 @@ namespace derivativecomplicated
 
 		auto exprTest = C4.e(expn);
 		std::cout << exprTest.strExpr() << std::endl;
-		auto derivedExpr = exprTest.derivative<double>(x);
+		auto derivedExpr = exprTest.derivative(x);
 		std::cout << derivedExpr.strExpr() << std::endl;
 
 		auto expn2 = x.e(x2.e(x3));
 		std::cout << expn2.strExpr() << std::endl;
 		
-		auto derivedExprx = expn2.derivative<double>(x);
-		auto derivedExprx2 = expn2.derivative<double>(x2);
-		auto derivedExprx3 = expn2.derivative<double>(x3);
+		auto derivedExprx = expn2.derivative(x);
+		auto derivedExprx2 = expn2.derivative(x2);
+		auto derivedExprx3 = expn2.derivative(x3);
 		
 		std::cout << derivedExprx.strExpr() << std::endl;
 		std::cout << derivedExprx2.strExpr() << std::endl;
@@ -71,9 +71,8 @@ namespace derivativecomplicated
 
 		auto expr = 2 * x.e(3) ;
 
-		std::cout << expr.derivative<double>(x) << std::endl;
-		std::cout << x.derivative<double>(x) << std::endl;
+		std::cout << expr.derivative(x) << std::endl;
+		std::cout << x.derivative(x) << std::endl;
 
 	}
-
 }

@@ -5,6 +5,7 @@
 #include "TestCasesDerivative.h"
 #include "TestCasesFunctions.h"
 #include "TestCasesDerivativeComplicated.h"
+#include "TestCasesEvaluation.h"
 
 #include "testcommon/testmacros.h"
 
@@ -63,4 +64,15 @@ namespace derivativecomplicated
 		REGISTERTESTCASE(complicatedExpr3)
 	}
 
+}
+
+namespace evaluationtest
+{
+	void TestSuite()
+	{
+		REGISTERTESTCASE(evaluationbasic)
+		REGISTERTESTCASE(evaluationexception)
+		REGISTERTESTCASE(evaluationcomplicated)
+		REGISTERTESTCASE(evaluationfunctiongraph)
+	}
 }

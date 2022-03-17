@@ -7,7 +7,7 @@
 // okay... i tried using variadic but failed - VS builder 17.1
 // And by some reason, the cascading way does not work, the last resort is below...
 
-#define DIFINT_VAR(v) di::V<LKEY_STR_ENCODER(#v)> v
+#define DIFINT_VAR(v) di::V<double,LKEY_STR_ENCODER(#v)> v
 
 #define DIFINT_VAR_2(v1, v2) DIFINT_VAR(v1); DIFINT_VAR(v2)
 

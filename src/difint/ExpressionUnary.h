@@ -4,6 +4,7 @@
 #include "difint/BooleanTemplate.h"
 #include "difint/Constant.h"
 #include <string>
+#include <cmath>
 
 #define GENERATE_EXPRESSION_UNARY_HAT(OpName)\
 template <typename _E>\
@@ -21,7 +22,7 @@ inline decltype(auto) create##OpName(_E&& E) {\
 	return OpName<_E>(std::forward<_E>(E));}
 
 namespace di {
-template <unsigned long long keystr>
+template <typename T, unsigned long long keystr>
 class V;
 
 template <typename T>
@@ -39,32 +40,32 @@ class _B;
 class Unexpected;
 
 template <typename T, typename EBOOL, typename _E, unsigned long long keylhs>
-inline decltype(auto) createNegDerivative(EBOOL eIn, _E E, const V<keylhs>& con) {
+inline decltype(auto) createNegDerivative(EBOOL eIn, _E E, const V<T, keylhs>& con) {
 	return Unexpected();
 }
 
 template <typename T, typename _E, unsigned long long keylhs>
-inline decltype(auto) createNegDerivative(_TRUE eIn, _E E, const V<keylhs>& con) {
-	return -E.derivative<T>(con);
+inline decltype(auto) createNegDerivative(_TRUE eIn, _E E, const V<T, keylhs>& con) {
+	return -E.derivative(con);
 }
 
 template <typename T, typename _E, unsigned long long keylhs>
-inline decltype(auto) createNegDerivative(_FALSE eIn, _E E, const V<keylhs>& con) {
+inline decltype(auto) createNegDerivative(_FALSE eIn, _E E, const V<T, keylhs>& con) {
 	return C0<T>();
 }
 
 template <typename T, typename EBOOL, typename _E, unsigned long long keylhs>
-inline decltype(auto) createLnDerivative(EBOOL eIn, _E E, const V<keylhs>& con) {
+inline decltype(auto) createLnDerivative(EBOOL eIn, _E E, const V<T, keylhs>& con) {
 	return Unexpected();
 }
 
 template <typename T, typename _E, unsigned long long keylhs>
-inline decltype(auto) createLnDerivative(_TRUE eIn, _E E, const V<keylhs>& con) {
-	return E.derivative<T>(con)/E;
+inline decltype(auto) createLnDerivative(_TRUE eIn, _E E, const V<T, keylhs>& con) {
+	return E.derivative(con)/E;
 }
 
 template <typename T, typename _E, unsigned long long keylhs>
-inline decltype(auto) createLnDerivative(_FALSE eIn, _E E, const V<keylhs>& con) {
+inline decltype(auto) createLnDerivative(_FALSE eIn, _E E, const V<T, keylhs>& con) {
 	return C0<T>();
 }
 
@@ -75,9 +76,11 @@ public:
 	inline constexpr int precedence() const{ return 21; }
 
 	template <typename T, unsigned long long keyIn>
-	auto derivative(const V<keyIn>& con) const {
+	auto derivative(const V<T, keyIn>& con) const {
 		return createNegDerivative<T>(m_E.findvar<keyIn>(), m_E, con);
 	}
+	
+	inline auto eval() { -m_E.eval(); }
 
 GENERATE_EXPRESSION_UNARY_SHOE(Neg)
 
@@ -87,9 +90,12 @@ public:
 	inline constexpr int precedence() const { return 11; }
 
 	template <typename T, unsigned long long keyIn>
-	auto derivative(const V<keyIn>& con) const {
+	auto derivative(const V<T, keyIn>& con) const {
 		return createLnDerivative<T>(m_E.findvar<keyIn>(),m_E, con);
 	}
+
+	inline auto eval() { return std::log(m_E.eval()); }
+
 GENERATE_EXPRESSION_UNARY_SHOE(Ln)
 
 }

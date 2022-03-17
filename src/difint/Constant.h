@@ -6,7 +6,7 @@
 
 namespace di
 {
-template <unsigned long long strKey>
+template <typename T, unsigned long long strKey>
 class V;
 
 template <typename T>
@@ -30,10 +30,10 @@ public:
 	inline constexpr int precedence() const { return 0; }
 
 	template <unsigned long long keyother>
-	auto derivative(const V<keyother>& con) const { return C0<T>(); }
+	auto derivative(const V<T, keyother>& con) const { return C0<T>(); }
 
-	template <typename T2,  unsigned long long keyother>
-	auto derivative(const V<keyother>& con) const { return C0<T2>(); }
+	//template <typename T2,  unsigned long long keyother>
+	//auto derivative(const V<keyother>& con) const { return C0<T2>(); }
 
 	T& val() { return m_data; }
 	const T& val() const { return m_data; }
@@ -41,6 +41,10 @@ public:
 	template<unsigned long long strOtherKey>
 	constexpr auto findvar() const { return _FALSE(); }
 	
+	inline void operator=(const T& rhs) { m_data = rhs; }
+
+	inline T eval() const { return m_data; }
+
 private:
 	T m_data;
 

@@ -162,6 +162,7 @@
     <ClInclude Include="TestCasesBasicExpression.h" />
     <ClInclude Include="TestCasesCharLiteral.h" />
     <ClInclude Include="TestCasesDerivativeComplicated.h" />
+    <ClInclude Include="TestCasesEvaluation.h" />
     <ClInclude Include="TestCasesFunctions.h" />
     <ClInclude Include="TestSuite.h" />
   </ItemGroup>

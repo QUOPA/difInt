@@ -45,5 +45,8 @@
     <ClInclude Include="BooleanTemplate.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Exceptions.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
