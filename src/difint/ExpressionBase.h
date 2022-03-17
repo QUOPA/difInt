@@ -17,6 +17,9 @@ public:
 	inline const auto e(const _B<OtherDerived>& rhs) const { return createExp(this->ref(), rhs.ref()); }
 
 	template <typename OtherDerived>
+	inline const auto e(double rhs) const { return createExp(this->ref(), C<double>(rhs) ); }
+
+	template <typename OtherDerived>
 	inline const auto operator+(const _B<OtherDerived>& rhs) const { return createSum(this->ref(), rhs.ref()); }
 
 	template <typename OtherDerived>
@@ -27,6 +30,8 @@ public:
 
 	template <typename OtherDerived>
 	inline const auto operator/(const _B<OtherDerived>& rhs) const { return createDiv(this->ref(), rhs.ref()); }
+
+
 
 	inline const auto operator-() const { return createNeg(this->ref()); }
 
@@ -50,8 +55,8 @@ private:
 	const Derived* derived() const { return static_cast<const Derived*> (this); }
 	Derived* derived() { return static_cast<Derived*> (this); }
 
-	//template <typename Derived2> inline 
-	//friend std::ostream& operator<<(std::ostream& o, const _B<Derived2>& inexpr);
+	template <typename Derived2> inline 
+	friend std::ostream& operator<<(std::ostream& o, const _B<Derived2>& inexpr);
 };
 
 
@@ -76,5 +81,11 @@ private:
 	template <typename OtherDerived>
 	friend class _B;
 };
+
+template<typename Derived2>
+std::ostream& operator<<(std::ostream& o, const _B<Derived2>& inexpr)
+{
+	return o << inexpr.strExpr();
+}
 
 }

@@ -48,6 +48,7 @@ namespace functiontests
 	void TestSuite()
 	{
 		REGISTERTESTCASE(basicFunctionExpression)
+		REGISTERTESTCASE(scalarvariableExpression)
 	}
 
 }
