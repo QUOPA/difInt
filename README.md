@@ -130,8 +130,8 @@ DIFINT_VAR(x);
 auto y = x.e(2);
 for (int idx = 0; idx < 100; ++idx)
 {
-  	x = idx / 10.0;
-		std::cout << "(" << x.eval() << "," <<  y.eval() << "," << y.derivative(x).eval() << ")" << std::endl;
+    x = idx / 10.0;
+    std::cout << "(" << x.eval() << "," <<  y.eval() << "," << y.derivative(x).eval() << ")" << std::endl;
 }
 ```
 Output Result
